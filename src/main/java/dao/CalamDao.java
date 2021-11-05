@@ -14,7 +14,6 @@ public class CalamDao implements CalamService {
 		// TODO Auto-generated constructor stub
 		this.em = HibernateUtils.getInstance().getEntityManager();
 	}
-	@Override
 	public Calam getCalamById(String id) {
 		// TODO Auto-generated method stub
 		Calam calam = null;
