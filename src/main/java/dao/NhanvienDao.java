@@ -1,29 +1,31 @@
 package dao;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import entity.Nhanvien;
 import service.NhanvienService;
+import utils.HibernateUtils;
 
 public class NhanvienDao implements NhanvienService{
 
-	private SessionFactory sessionFactory;
+	private EntityManager em;
 	
-	public NhanvienDao(SessionFactory sessionFactory) {
-		super();
-		this.sessionFactory = sessionFactory;
+	public NhanvienDao() {
+		this.em = HibernateUtils.getInstance().getEntityManager();
 	}
 
 	public Nhanvien getNhanvienById(String id) {
 		// TODO Auto-generated method stub
-		Session session = sessionFactory.getCurrentSession();
-		Transaction trans = session.getTransaction();
+		EntityTransaction trans = em.getTransaction();
 		
 		try {
 			trans.begin();
-			Nhanvien nhanvien = session.find(Nhanvien.class, id);
+			Nhanvien nhanvien = em.find(Nhanvien.class, id);
 			trans.commit();
 			return nhanvien;
 		} catch (Exception e) {

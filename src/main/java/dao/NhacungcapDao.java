@@ -1,25 +1,26 @@
 package dao;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 import entity.Nhacungcap;
 import service.NhacungcapService;
+import utils.HibernateUtils;
 
 public class NhacungcapDao implements NhacungcapService{
 
-	public NhacungcapDao(SessionFactory sessionFactory) {
-		super();
-		this.sessionFactory = sessionFactory;
+	private EntityManager em;
+	public NhacungcapDao() {
+		// TODO Auto-generated constructor stub
+		this.em = HibernateUtils.getInstance().getEntityManager();
 	}
-	private SessionFactory sessionFactory;
 	public Nhacungcap getNhaCCById(String id) {
-		Session session = sessionFactory.getCurrentSession();
-		Transaction trans = session.getTransaction();
+		
+		EntityTransaction trans = em.getTransaction();
+
 		try {
 			trans.begin();
-			Nhacungcap nhacungcap = session.find(Nhacungcap.class, id);
+			Nhacungcap nhacungcap = em.find(Nhacungcap.class, id);
 			trans.commit();
 			return nhacungcap;
 		} catch (Exception e) {
